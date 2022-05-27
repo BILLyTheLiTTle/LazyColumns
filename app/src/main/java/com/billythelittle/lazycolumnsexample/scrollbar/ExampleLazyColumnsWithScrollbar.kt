@@ -20,7 +20,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.billythelittle.lazycolumns.LazyColumnWithScrollbar
 
-@OptIn(ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class)
+@ExperimentalMaterialApi
+@ExperimentalComposeUiApi
 @ExperimentalFoundationApi
 @RequiresApi(Build.VERSION_CODES.N)
 @Composable
