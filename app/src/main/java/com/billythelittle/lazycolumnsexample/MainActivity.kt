@@ -8,6 +8,7 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.ExperimentalComposeUiApi
 import coil.annotation.ExperimentalCoilApi
 import androidx.compose.ui.tooling.preview.Preview
 import com.billythelittle.lazycolumnsexample.doubleheader.ExampleDoubleHeaderList
@@ -19,7 +20,10 @@ import com.billythelittle.lazycolumnsexample.ui.theme.LazyColumnsTheme
 class MainActivity : ComponentActivity() {
 
 
-    @OptIn(ExperimentalCoilApi::class, ExperimentalFoundationApi::class)
+    @ExperimentalComposeUiApi
+    @ExperimentalMaterialApi
+    @ExperimentalCoilApi
+    @ExperimentalFoundationApi
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
