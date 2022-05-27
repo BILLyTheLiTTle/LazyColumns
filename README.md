@@ -22,3 +22,6 @@ Currently, you can find implementation and usage details in Medium article "[Dou
 
 ### IndexedLazyColumns
 Currently, you can find implementation and usage details in Medium article "[IndexedLazyColumns](https://betterprogramming.pub/lazycolumn-with-indexing-for-jetpack-compose-3456023d19d5)".
+
+### LazyColumnWithScrollbar
+The guide will be published soon...
