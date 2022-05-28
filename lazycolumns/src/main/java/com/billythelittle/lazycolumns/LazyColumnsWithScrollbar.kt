@@ -64,8 +64,8 @@ fun LazyColumnWithScrollbar(data: List<Int>,
             contentPadding = contentPadding,
 //            reverseLayout = reverseLayout,
 //        verticalArrangement = verticalArrangement,
-        horizontalAlignment = horizontalAlignment,
-        flingBehavior = flingBehavior,
+            horizontalAlignment = horizontalAlignment,
+            flingBehavior = flingBehavior,
             modifier = modifier.pointerInput(Unit) {
                 detectTapGestures(onPress = {
                     isUserScrollingLazyColumn.value = true
@@ -88,7 +88,8 @@ fun LazyColumnWithScrollbar(data: List<Int>,
                 if (heightInPixels.value != 0F) {
 
                     if (firstVisibleItem.value > state.layoutInfo.visibleItemsInfo.first().index ||// Scroll to upper start of list
-                        state.layoutInfo.visibleItemsInfo.first().index == 0) { // Reached the upper start of list
+                        state.layoutInfo.visibleItemsInfo.first().index == 0
+                    ) { // Reached the upper start of list
                         /* The items which could be rendered should not be taken under account
                            otherwise you are going to show the last rendered items before
                            the scrollbar reaches the bottom.
@@ -151,6 +152,7 @@ fun LazyColumnWithScrollbar(data: List<Int>,
 //        ),
 //            modifier = Modifier.align(Alignment.CenterEnd)
 //        ) {
+        if (state.layoutInfo.visibleItemsInfo.size < data.size) {
         Canvas(modifier = Modifier
             .width(15.dp)
             .height(maxHeight)
@@ -209,6 +211,7 @@ fun LazyColumnWithScrollbar(data: List<Int>,
                 cornerRadius = CornerRadius(20F, 20F)
             )
         }
+    }
 //        }
     }
 }
