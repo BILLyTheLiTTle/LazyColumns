@@ -86,25 +86,27 @@ fun LazyColumnWithScrollbar(data: List<Int>,
                 isScrollbarVisible.value = true
                 if (heightInPixels.value != 0F) {
 
-                    if (firstVisibleItem.value > state.layoutInfo.visibleItemsInfo.first().index) {
+                    if (firstVisibleItem.value > state.layoutInfo.visibleItemsInfo.first().index ||// Scroll to upper start of list
+                        state.layoutInfo.visibleItemsInfo.first().index == 0) { // Reached the upper start of list
                         /* The items which could be rendered should not be taken under account
                            otherwise you are going to show the last rendered items before
                            the scrollbar reaches the bottom.
                            Change the renderedItemsNumberPerScroll = 0 and scroll to the bottom
                            and you will understand.
                          */
-                        // Scroll to upper start of list
-                        val renderedItemsNumberPerScroll =
-                            state.layoutInfo.visibleItemsInfo.size - 2
                         val index = state.layoutInfo.visibleItemsInfo.first().index
-                        val indexPercentage = ((100 * index) / data.lastIndex)
+                        if (index == 0) {
+                            offsetY.value = 0F
+                        } else {
+                            val indexPercentage = ((100 * index) / data.lastIndex)
 
-                        val yMaxValue = heightInPixels.value - heightInPixels.value / 3F
+                            val yMaxValue = heightInPixels.value - heightInPixels.value / 3F
 
-                        val calculatedOffsetY = ((yMaxValue * indexPercentage) / 100)
+                            val calculatedOffsetY = ((yMaxValue * indexPercentage) / 100)
 
-                        offsetY.value = calculatedOffsetY
-                    } else { // scroll to bottom end of list
+                            offsetY.value = calculatedOffsetY
+                        }
+                    } else { // scroll to bottom end of list or reach the bottom end of the list
                         /* The items which could be rendered should not be taken under account
                            otherwise you are going to show the last rendered items before
                            the scrollbar reaches the bottom.
@@ -113,13 +115,17 @@ fun LazyColumnWithScrollbar(data: List<Int>,
                          */
 
                         val index = state.layoutInfo.visibleItemsInfo.last().index
-                        val indexPercentage = ((100 * (index)) / data.lastIndex)
+                        if (index == data.lastIndex) {
+                            offsetY.value = heightInPixels.value - heightInPixels.value / 3F
+                        } else {
+                            val indexPercentage = ((100 * (index)) / data.lastIndex)
 
-                        val yMaxValue = heightInPixels.value - heightInPixels.value / 3F
+                            val yMaxValue = heightInPixels.value - heightInPixels.value / 3F
 
-                        val calculatedOffsetY = ((yMaxValue * indexPercentage) / 100)
+                            val calculatedOffsetY = ((yMaxValue * indexPercentage) / 100)
 
-                        offsetY.value = calculatedOffsetY
+                            offsetY.value = calculatedOffsetY
+                        }
                     }
 
                 }
