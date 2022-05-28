@@ -60,10 +60,10 @@ fun DoubleHeaderLazyColumn(data: List<Item>,
     }
 
     val mainGroup = data.groupBy { it.type }
-    Column() {
+    Column(modifier = modifier) {
         // This header's content will be updated while scrolling
         headerContent(header.value)
-        LazyColumn(modifier = modifier, state = listState) {
+        LazyColumn(state = listState) {
             mainGroup.forEach { (type, groupedData) ->
                 stickyHeader {
                     // This header visibility will be updated while scrolling
