@@ -6,6 +6,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.*
 import androidx.compose.runtime.*
@@ -22,7 +23,8 @@ import kotlinx.coroutines.launch
 fun <T> IndexedLazyColumn(
     indices: List<T>,
     itemsListState: LazyListState,
-    modifier: Modifier = Modifier,
+    mainModifier: Modifier = Modifier,
+    indicesModifier: Modifier = Modifier,
     predicate: (T) -> Int,
     lazyColumnContent: @Composable () -> Unit,
     indexedItemContent: @Composable (T, Boolean) -> Unit
@@ -36,7 +38,7 @@ fun <T> IndexedLazyColumn(
         mutableStateOf(0)
     }
 
-    Box(contentAlignment = Alignment.CenterEnd) {
+    Box(modifier = mainModifier, contentAlignment = Alignment.CenterEnd) {
         Column() {
             lazyColumnContent()
         }
@@ -44,7 +46,7 @@ fun <T> IndexedLazyColumn(
         LazyColumn(
             state = indexState,
             horizontalAlignment = Alignment.End,
-            modifier = modifier
+            modifier = indicesModifier
         ) {
             if (!indexState.isScrollInProgress && shouldUpdateSelection.value) {
                 val index = selectIndexItem(indexState)
@@ -83,7 +85,8 @@ fun <T> IndexedLazyColumn(
 fun <T> IndexedDataLazyColumn(
     indices: List<T>,
     data: List<T>,
-    modifier: Modifier = Modifier,
+    mainModifier: Modifier = Modifier,
+    indicesModifier: Modifier = Modifier,
     predicate: (T) -> Int,
     mainItemContent: @Composable LazyItemScope.(Int) -> Unit,
     indexedItemContent: @Composable (T, Boolean) -> Unit
@@ -98,7 +101,7 @@ fun <T> IndexedDataLazyColumn(
         mutableStateOf(0)
     }
 
-    Box(contentAlignment = Alignment.CenterEnd) {
+    Box(modifier = mainModifier, contentAlignment = Alignment.CenterEnd) {
         Column() {
             LazyColumn(state = itemsState) {
                 itemsIndexed(data) { index, item ->
@@ -110,7 +113,7 @@ fun <T> IndexedDataLazyColumn(
         LazyColumn(
             state = indexState,
             horizontalAlignment = Alignment.End,
-            modifier = modifier
+            modifier = indicesModifier
         ) {
             if (!indexState.isScrollInProgress && shouldUpdateSelection.value) {
                 val index = selectIndexItem(indexState)

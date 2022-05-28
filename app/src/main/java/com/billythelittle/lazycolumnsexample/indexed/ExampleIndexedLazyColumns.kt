@@ -37,8 +37,10 @@ fun ExampleIndexedLazyColumn(data: List<CustomListItem2>,
         indices = indices,
         // The state of the main LazyColumn, the one with the real data
         itemsListState = lazyListState,
+        // The modifier is exported for the Column, the one with the main items
+        mainModifier = Modifier.height(600.dp),
         // The modifier is exported for the Column, the one with the indices
-        modifier = Modifier
+        indicesModifier = Modifier
             .background(color = Color.Transparent)
             .height(300.dp),
         // The way to connect the index with a data item (here the index item matches the first letter of the surname)
@@ -93,8 +95,10 @@ fun ExampleIndexedDataLazyColumn(data: List<CustomListItem2>,
         indices = indices,
         // The list of the actual data
         data = data,
+        // The modifier is exported for the Column, the one with the main items
+        mainModifier = Modifier.height(600.dp),
         // The modifier is exported for the Column, the one with the indices
-        modifier = Modifier
+        indicesModifier = Modifier
             .background(color = Color.Transparent)
             .height(300.dp),
         // The way to connect the index with a data item (here the index item matches the first letter of the surname)
