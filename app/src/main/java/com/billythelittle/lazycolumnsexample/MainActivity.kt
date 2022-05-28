@@ -31,10 +31,10 @@ class MainActivity : ComponentActivity() {
             LazyColumnsTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-//                    ExampleDoubleHeaderList(getTheData())
+                    ExampleDoubleHeaderList(getTheData())
 //                    ExampleIndexedLazyColumn(getTheIndexedData())
 //                    ExampleIndexedDataLazyColumn(getTheIndexedData())
-                    ExampleLazyColumnWithScrollbar((1..29).toList())
+//                    ExampleLazyColumnWithScrollbar((1..29).toList())
                 }
             }
         }

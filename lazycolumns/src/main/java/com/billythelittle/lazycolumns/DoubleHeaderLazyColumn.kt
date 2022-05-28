@@ -32,7 +32,7 @@ open class Item(
 @ExperimentalFoundationApi
 @Composable
 fun DoubleHeaderLazyColumn(data: List<Item>,
-                     modifier: Modifier,
+                     modifier: Modifier = Modifier,
                      headerContent: @Composable (String) -> Unit,
                      subHeaderContent: @Composable (String) -> Unit,
                      itemContent: @Composable (Item) -> Unit) {

@@ -26,7 +26,7 @@ import com.billythelittle.lazycolumnsexample.CustomListItem
 @Composable
 fun ExampleDoubleHeaderList(data: List<CustomListItem>){
     DoubleHeaderLazyColumn(data = data,
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.height(300.dp),
         headerContent = {
             Card(
                 modifier = Modifier
