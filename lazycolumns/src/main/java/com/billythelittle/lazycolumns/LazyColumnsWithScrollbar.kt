@@ -78,6 +78,7 @@ fun LazyColumnWithScrollbar(data: List<Int>,
             }
         ) {
             if (!state.isScrollInProgress) {
+                isUserScrollingLazyColumn.value = true
                 isScrollbarVisible.value = false
                 if (state.layoutInfo.visibleItemsInfo.isNotEmpty()) {
                     firstVisibleItem.value = state.layoutInfo.visibleItemsInfo.first().index
