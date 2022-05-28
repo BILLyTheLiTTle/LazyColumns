@@ -59,14 +59,14 @@ fun LazyColumnWithScrollbar(data: List<Int>,
         mutableStateOf(false)
     }
 
-    BoxWithConstraints() {
+    BoxWithConstraints(modifier = modifier) {
         LazyColumn(state = state,
             contentPadding = contentPadding,
 //            reverseLayout = reverseLayout,
 //        verticalArrangement = verticalArrangement,
             horizontalAlignment = horizontalAlignment,
             flingBehavior = flingBehavior,
-            modifier = modifier.pointerInput(Unit) {
+            modifier = Modifier.pointerInput(Unit) {
                 detectTapGestures(onPress = {
                     isUserScrollingLazyColumn.value = true
                     heightInPixels.value = maxHeight.toPx()

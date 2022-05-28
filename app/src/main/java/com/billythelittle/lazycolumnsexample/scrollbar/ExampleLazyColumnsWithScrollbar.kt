@@ -4,9 +4,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
@@ -26,7 +24,7 @@ import com.billythelittle.lazycolumns.LazyColumnWithScrollbar
 @RequiresApi(Build.VERSION_CODES.N)
 @Composable
 fun ExampleLazyColumnWithScrollbar(data: List<Int>) {
-    LazyColumnWithScrollbar(data = data) {
+    LazyColumnWithScrollbar(data = data, modifier = Modifier.height(500.dp)) {
         items(data) {
             Card(
                 modifier = Modifier

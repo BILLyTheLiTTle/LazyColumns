@@ -34,7 +34,7 @@ class MainActivity : ComponentActivity() {
 //                    ExampleDoubleHeaderList(getTheData())
 //                    ExampleIndexedLazyColumn(getTheIndexedData())
 //                    ExampleIndexedDataLazyColumn(getTheIndexedData())
-                    ExampleLazyColumnWithScrollbar((1..120).toList())
+                    ExampleLazyColumnWithScrollbar((1..29).toList())
                 }
             }
         }
