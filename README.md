@@ -52,7 +52,7 @@ fun DoubleHeaderLazyColumn(
 #### Examples
 You can find a code example [here](https://github.com/BILLyTheLiTTle/LazyColumns/blob/main/app/src/main/java/com/billythelittle/lazycolumnsexample/doubleheader/ExampleBoubleHeaderList.kt).
 
-If you want to see how it looks like check this [video](https://youtu.be/VXfqgaCA_6w).
+If you want to see how it looks like, check this [video](https://youtu.be/VXfqgaCA_6w).
 
 ### IndexedLazyColumns
 #### How to use
@@ -116,7 +116,7 @@ fun <T> IndexedLazyColumn(
 #### Examples
 You can find a code example [here](https://github.com/BILLyTheLiTTle/LazyColumns/blob/main/app/src/main/java/com/billythelittle/lazycolumnsexample/indexed/ExampleIndexedLazyColumns.kt).
 
-If you want to see how it looks like check this [video](https://youtu.be/-LvYbSgeMwU).
+If you want to see how it looks like, check this [video](https://youtu.be/-LvYbSgeMwU).
 
 ### LazyColumnWithScrollbar
 #### How to use
@@ -135,3 +135,5 @@ fun LazyColumnWithScrollbar(
 ```
 #### Examples
 You can find an example [here](https://github.com/BILLyTheLiTTle/LazyColumns/blob/main/app/src/main/java/com/billythelittle/lazycolumnsexample/scrollbar/ExampleLazyColumnsWithScrollbar.kt).
+
+If you want to see how it looks like, check this [video](https://youtube.com/shorts/YQ6H26Sf6CM).
