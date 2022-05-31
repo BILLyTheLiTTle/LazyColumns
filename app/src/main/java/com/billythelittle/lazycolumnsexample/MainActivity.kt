@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -30,6 +31,7 @@ import com.billythelittle.lazycolumnsexample.ui.theme.LazyColumnsTheme
 
 class MainActivity : ComponentActivity() {
 
+    @ExperimentalAnimationApi
     @ExperimentalComposeUiApi
     @ExperimentalMaterialApi
     @ExperimentalCoilApi

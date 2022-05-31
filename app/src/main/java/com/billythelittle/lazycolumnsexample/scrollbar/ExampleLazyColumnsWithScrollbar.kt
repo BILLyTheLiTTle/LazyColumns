@@ -2,6 +2,7 @@ package com.billythelittle.lazycolumnsexample.scrollbar
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -18,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.billythelittle.lazycolumns.LazyColumnWithScrollbar
 
+@ExperimentalAnimationApi
 @ExperimentalMaterialApi
 @ExperimentalComposeUiApi
 @ExperimentalFoundationApi
