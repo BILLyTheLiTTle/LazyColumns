@@ -87,40 +87,46 @@ fun LazyColumnWithScrollbar(data: List<Int>,
                 isScrollbarVisible.value = true
                 if (heightInPixels.value != 0F) {
 
-                    if (firstVisibleItem.value > state.layoutInfo.visibleItemsInfo.first().index ||// Scroll to upper start of list
-                        state.layoutInfo.visibleItemsInfo.first().index == 0
-                    ) { // Reached the upper start of list
-                        /* The items which could be rendered should not be taken under account
-                           otherwise you are going to show the last rendered items before
-                           the scrollbar reaches the bottom.
-                           Change the renderedItemsNumberPerScroll = 0 and scroll to the bottom
-                           and you will understand.
-                         */
-                        val index = state.layoutInfo.visibleItemsInfo.first().index
-                        if (index == 0) {
+                    if (firstVisibleItem.value > state.layoutInfo.visibleItemsInfo.first().index || // Scroll to upper start of list
+                        state.layoutInfo.visibleItemsInfo.first().index == 0 // Reached the upper start of list
+                    ) {
+                        if (state.layoutInfo.visibleItemsInfo.first().index == 0) {
                             offsetY.value = 0F
                         } else {
-                            val indexPercentage = ((100 * index) / data.lastIndex)
+                            /* The items which are already shown on screen should not be taken
+                            for calculations because they are already on screen!
+                            You have to calculate the items remaining off screen as the 100%
+                            of the data and match this percentage with the distance travelled
+                            by the scrollbar.
+                         */
+                            val renderedItemsNumberPerScroll =
+                                state.layoutInfo.visibleItemsInfo.size - 2
+                            val itemsToScroll = data.size - renderedItemsNumberPerScroll
+                            val index = state.layoutInfo.visibleItemsInfo.first().index
+                            val indexPercentage = ((100 * index) / itemsToScroll)
 
-                            val yMaxValue = heightInPixels.value - heightInPixels.value / 3F
+                            val yMaxValue = (heightInPixels.value - heightInPixels.value / 3F)
 
                             val calculatedOffsetY = ((yMaxValue * indexPercentage) / 100)
 
                             offsetY.value = calculatedOffsetY
                         }
                     } else { // scroll to bottom end of list or reach the bottom end of the list
-                        /* The items which could be rendered should not be taken under account
-                           otherwise you are going to show the last rendered items before
-                           the scrollbar reaches the bottom.
-                           Change the renderedItemsNumberPerScroll = 0 and scroll to the bottom
-                           and you will understand.
+                        /* The items which are already shown on screen should not be taken
+                            for calculations because they are already on screen!
+                            You have to calculate the items remaining off screen as the 100%
+                            of the data and match this percentage with the distance travelled
+                            by the scrollbar.
                          */
 
-                        val index = state.layoutInfo.visibleItemsInfo.last().index
-                        if (index == data.lastIndex) {
+                        if (state.layoutInfo.visibleItemsInfo.last().index == data.lastIndex) {
                             offsetY.value = heightInPixels.value - heightInPixels.value / 3F
                         } else {
-                            val indexPercentage = ((100 * (index)) / data.lastIndex)
+                            val renderedItemsNumberPerScroll =
+                                state.layoutInfo.visibleItemsInfo.size - 2
+                            val itemsToScroll = data.size - renderedItemsNumberPerScroll
+                            val index = state.layoutInfo.visibleItemsInfo.first().index
+                            val indexPercentage = ((100 * (index)) / itemsToScroll)
 
                             val yMaxValue = heightInPixels.value - heightInPixels.value / 3F
 
