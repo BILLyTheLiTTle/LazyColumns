@@ -20,7 +20,8 @@ import coil.transform.CircleCropTransformation
 import com.billythelittle.lazycolumns.DoubleHeaderLazyColumn
 import com.billythelittle.lazycolumnsexample.CustomListItem
 
-@OptIn(ExperimentalCoilApi:: class, ExperimentalAnimationApi::class)
+@ExperimentalCoilApi
+@ExperimentalAnimationApi
 @ExperimentalFoundationApi
 @RequiresApi(Build.VERSION_CODES.N)
 @Composable
