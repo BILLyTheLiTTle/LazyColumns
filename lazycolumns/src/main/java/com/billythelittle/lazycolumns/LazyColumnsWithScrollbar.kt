@@ -18,10 +18,7 @@ import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -32,7 +29,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.consumeAllChanges
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+
 
 @ExperimentalAnimationApi
 @ExperimentalMaterialApi
@@ -40,8 +39,8 @@ import kotlinx.coroutines.launch
 @ExperimentalFoundationApi
 @RequiresApi(Build.VERSION_CODES.N)
 @Composable
-fun LazyColumnWithScrollbar(
-    data: List<Int>,
+fun <T> LazyColumnWithScrollbar(
+    data: List<T>,
     modifier: Modifier = Modifier,
     state: LazyListState = rememberLazyListState(),
     contentPadding: PaddingValues = PaddingValues(0.dp),
@@ -54,6 +53,7 @@ fun LazyColumnWithScrollbar(
 ) {
     val coroutineContext = rememberCoroutineScope()
     val animationCoroutineContext = rememberCoroutineScope()
+
     val offsetY = remember { mutableStateOf(0f) }
     val isUserScrollingLazyColumn = remember {
         mutableStateOf(true)
@@ -88,16 +88,14 @@ fun LazyColumnWithScrollbar(
         ) {
             if (!state.isScrollInProgress) {
                 isUserScrollingLazyColumn.value = true
-                animationCoroutineContext.launch {
-                    isScrollbarVisible.value = false
-                }
+                hideScrollbar(animationCoroutineContext, isScrollbarVisible)
+
                 if (state.layoutInfo.visibleItemsInfo.isNotEmpty()) {
                     firstVisibleItem.value = state.layoutInfo.visibleItemsInfo.first().index
                 }
             } else if (state.isScrollInProgress && isUserScrollingLazyColumn.value) {
-                animationCoroutineContext.launch {
-                    isScrollbarVisible.value = true
-                }
+                showScrollbar(animationCoroutineContext, isScrollbarVisible)
+
                 if (heightInPixels.value != 0F) {
 
                     if (firstVisibleItem.value > state.layoutInfo.visibleItemsInfo.first().index || // Scroll to upper start of list
@@ -106,46 +104,13 @@ fun LazyColumnWithScrollbar(
                         if (state.layoutInfo.visibleItemsInfo.first().index == 0) {
                             offsetY.value = 0F
                         } else {
-                            /* The items which are already shown on screen should not be taken
-                            for calculations because they are already on screen!
-                            You have to calculate the items remaining off screen as the 100%
-                            of the data and match this percentage with the distance travelled
-                            by the scrollbar.
-                         */
-                            val renderedItemsNumberPerScroll =
-                                state.layoutInfo.visibleItemsInfo.size - 2
-                            val itemsToScroll = data.size - renderedItemsNumberPerScroll
-                            val index = state.layoutInfo.visibleItemsInfo.first().index
-                            val indexPercentage = ((100 * index) / itemsToScroll)
-
-                            val yMaxValue = (heightInPixels.value - heightInPixels.value / 3F)
-
-                            val calculatedOffsetY = ((yMaxValue * indexPercentage) / 100)
-
-                            offsetY.value = calculatedOffsetY
+                            offsetY.value = calculateScrollbarOffsetY(state, data.size, heightInPixels)
                         }
                     } else { // scroll to bottom end of list or reach the bottom end of the list
-                        /* The items which are already shown on screen should not be taken
-                            for calculations because they are already on screen!
-                            You have to calculate the items remaining off screen as the 100%
-                            of the data and match this percentage with the distance travelled
-                            by the scrollbar.
-                         */
-
                         if (state.layoutInfo.visibleItemsInfo.last().index == data.lastIndex) {
                             offsetY.value = heightInPixels.value - heightInPixels.value / 3F
                         } else {
-                            val renderedItemsNumberPerScroll =
-                                state.layoutInfo.visibleItemsInfo.size - 2
-                            val itemsToScroll = data.size - renderedItemsNumberPerScroll
-                            val index = state.layoutInfo.visibleItemsInfo.first().index
-                            val indexPercentage = ((100 * (index)) / itemsToScroll)
-
-                            val yMaxValue = heightInPixels.value - heightInPixels.value / 3F
-
-                            val calculatedOffsetY = ((yMaxValue * indexPercentage) / 100)
-
-                            offsetY.value = calculatedOffsetY
+                            offsetY.value = calculateScrollbarOffsetY(state, data.size, heightInPixels)
                         }
                     }
 
@@ -180,9 +145,9 @@ fun LazyColumnWithScrollbar(
                         heightInPixels.value = maxHeight.toPx()
                         detectDragGestures { change, dragAmount ->
                             change.consumeAllChanges()
-                            animationCoroutineContext.launch {
-                                isScrollbarVisible.value = true
-                            }
+
+                            showScrollbar(animationCoroutineContext, isScrollbarVisible)
+
                             isUserScrollingLazyColumn.value = false
                             if (dragAmount.y > 0) { // drag slider down
                                 if (offsetY.value >= (maxHeight.toPx() - maxHeight.toPx() / 3F)) { // Bottom End
@@ -235,4 +200,37 @@ fun LazyColumnWithScrollbar(
             }
         }
     }
+}
+
+private fun hideScrollbar(coroutineScope: CoroutineScope, state: MutableState<Boolean>) {
+    coroutineScope.launch {
+        state.value = false
+    }
+}
+
+private fun showScrollbar(coroutineScope: CoroutineScope, state: MutableState<Boolean>) {
+    coroutineScope.launch {
+        state.value = true
+    }
+}
+
+/* The items which are already shown on screen should not be taken
+for calculations because they are already on screen!
+You have to calculate the items remaining off screen as the 100%
+of the data and match this percentage with the distance travelled
+by the scrollbar.
+*/
+private fun calculateScrollbarOffsetY(
+    state: LazyListState, dataSize: Int,
+    height: MutableState<Float>
+): Float {
+    val renderedItemsNumberPerScroll =
+        state.layoutInfo.visibleItemsInfo.size - 2
+    val itemsToScroll = dataSize - renderedItemsNumberPerScroll
+    val index = state.layoutInfo.visibleItemsInfo.first().index
+    val indexPercentage = ((100 * index) / itemsToScroll)
+
+    val yMaxValue = height.value - height.value / 3F
+
+    return ((yMaxValue * indexPercentage) / 100)
 }
