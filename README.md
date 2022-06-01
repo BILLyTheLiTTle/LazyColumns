@@ -56,6 +56,8 @@ You can find a code example [here](https://github.com/BILLyTheLiTTle/LazyColumns
 
 If you want to see how it looks like, check this [video](https://youtu.be/VXfqgaCA_6w).
 
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/VXfqgaCA_6w/0.jpg)](https://www.youtube.com/watch?v=VXfqgaCA_6w)
+
 ### IndexedLazyColumns
 #### How to use
 To implement the indexed `LazyColumn` you should call:
@@ -120,6 +122,8 @@ You can find a code example [here](https://github.com/BILLyTheLiTTle/LazyColumns
 
 If you want to see how it looks like, check this [video](https://youtu.be/-LvYbSgeMwU).
 
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/-LvYbSgeMwU/0.jpg)](https://www.youtube.com/watch?v=-LvYbSgeMwU)
+
 ### LazyColumnWithScrollbar
 #### How to use
 To implement the `LazyColumn` with a scrollbar you should call this Composable function:
@@ -139,3 +143,5 @@ fun <T> LazyColumnWithScrollbar(
 You can find an example [here](https://github.com/BILLyTheLiTTle/LazyColumns/blob/main/app/src/main/java/com/billythelittle/lazycolumnsexample/scrollbar/ExampleLazyColumnsWithScrollbar.kt).
 
 If you want to see how it looks like, check this [video](https://youtube.com/shorts/YQ6H26Sf6CM).
+
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/YQ6H26Sf6CM/0.jpg)](https://www.youtube.com/watch?v=YQ6H26Sf6CM)
