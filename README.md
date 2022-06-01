@@ -56,7 +56,11 @@ You can find a code example [here](https://github.com/BILLyTheLiTTle/LazyColumns
 
 If you want to see how it looks like, check this [video](https://youtu.be/VXfqgaCA_6w).
 
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/VXfqgaCA_6w/0.jpg)](https://www.youtube.com/watch?v=VXfqgaCA_6w)
+<p align="center">
+	<a href="https://www.youtube.com/watch?v=VXfqgaCA_6w" target="_blank">
+		<img src="https://img.youtube.com/vi/VXfqgaCA_6w/0.jpg">
+	</a>
+</p>
 
 ### IndexedLazyColumns
 #### How to use
@@ -122,7 +126,11 @@ You can find a code example [here](https://github.com/BILLyTheLiTTle/LazyColumns
 
 If you want to see how it looks like, check this [video](https://youtu.be/-LvYbSgeMwU).
 
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/-LvYbSgeMwU/0.jpg)](https://www.youtube.com/watch?v=-LvYbSgeMwU)
+<p align="center">
+	<a href="https://www.youtube.com/watch?v=-LvYbSgeMwU" target="_blank">
+		<img src="https://img.youtube.com/vi/-LvYbSgeMwU/0.jpg">
+	</a>
+</p>
 
 ### LazyColumnWithScrollbar
 #### How to use
@@ -144,4 +152,8 @@ You can find an example [here](https://github.com/BILLyTheLiTTle/LazyColumns/blo
 
 If you want to see how it looks like, check this [video](https://youtube.com/shorts/YQ6H26Sf6CM).
 
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/YQ6H26Sf6CM/0.jpg)](https://www.youtube.com/watch?v=YQ6H26Sf6CM)
+<p align="center">
+	<a href="https://www.youtube.com/watch?v=YQ6H26Sf6CM" target="_blank">
+		<img src="https://img.youtube.com/vi/YQ6H26Sf6CM/0.jpg">
+	</a>
+</p>
