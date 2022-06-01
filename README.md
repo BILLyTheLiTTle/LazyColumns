@@ -1,3 +1,5 @@
+[![](https://jitpack.io/v/BILLyTheLiTTle/LazyColumns.svg)](https://jitpack.io/#BILLyTheLiTTle/LazyColumns)
+
 # LazyColumns
 Here you will find variation of `LazyColumn`s for Jetpack Compose.
 
@@ -11,7 +13,7 @@ repositories {
 Next add the dependency in your module:
 ```kotlin
 dependencies {
-	 implementation 'com.github.BILLyTheLiTTle:LazyColumns:0.2.4'
+	 implementation 'com.github.BILLyTheLiTTle:LazyColumns:0.2.5'
 }
 ```
 
@@ -123,8 +125,8 @@ If you want to see how it looks like, check this [video](https://youtu.be/-LvYbS
 To implement the `LazyColumn` with a scrollbar you should call this Composable function:
 ```kotlin
 /* The parameters below, are the same (some are missing though) as a regular LazyColumn implementation */
-fun LazyColumnWithScrollbar(
-    data: List<Int>,
+fun <T> LazyColumnWithScrollbar(
+    data: List<T>,
     modifier: Modifier = Modifier,
     state: LazyListState = rememberLazyListState(),
     contentPadding: PaddingValues = PaddingValues(0.dp),
