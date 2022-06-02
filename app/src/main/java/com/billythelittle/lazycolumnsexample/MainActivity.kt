@@ -29,14 +29,14 @@ import com.billythelittle.lazycolumnsexample.indexed.ExampleIndexedLazyColumn
 import com.billythelittle.lazycolumnsexample.scrollbar.ExampleLazyColumnWithScrollbar
 import com.billythelittle.lazycolumnsexample.ui.theme.LazyColumnsTheme
 
+@ExperimentalAnimationApi
+@ExperimentalComposeUiApi
+@ExperimentalMaterialApi
+@ExperimentalCoilApi
+@ExperimentalFoundationApi
+@RequiresApi(Build.VERSION_CODES.N)
 class MainActivity : ComponentActivity() {
 
-    @ExperimentalAnimationApi
-    @ExperimentalComposeUiApi
-    @ExperimentalMaterialApi
-    @ExperimentalCoilApi
-    @ExperimentalFoundationApi
-    @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
