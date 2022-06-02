@@ -63,7 +63,7 @@ fun ExampleLazyColumnWithScrollbar(data: List<Int>) {
         }
 
         Row() {
-            Button(modifier = Modifier.padding(4.dp),
+            Button(modifier = Modifier.fillMaxWidth(0.5F).padding(4.dp),
                 contentPadding = PaddingValues(4.dp),
                 onClick = {
                     scrollbarSettings.value = scrollbarSettings.value.copy(
@@ -74,10 +74,10 @@ fun ExampleLazyColumnWithScrollbar(data: List<Int>) {
                     )
                 }
             ) {
-                Text(text = "Green+Small+XL")
+                Text(text = "Green + Small + Thick")
             }
 
-            Button(modifier = Modifier.padding(4.dp),
+            Button(modifier = Modifier.fillMaxWidth(1F).padding(4.dp),
                 contentPadding = PaddingValues(4.dp),
                 onClick = {
                     scrollbarSettings.value = scrollbarSettings.value.copy(
@@ -88,18 +88,16 @@ fun ExampleLazyColumnWithScrollbar(data: List<Int>) {
                     )
                 }
             ) {
-                Text("Red+Yellow+XL+Small")
-            }
-
-            Button(modifier = Modifier.padding(4.dp),
-                contentPadding = PaddingValues(4.dp),
-                onClick = {
-                    scrollbarSettings.value = LazyColumnScrollbarSettings()
-                }
-            ) {
-                Text("Default")
+                Text("Red + Yellow + XL + Thin")
             }
         }
-
+        Button(modifier = Modifier.padding(4.dp).fillMaxWidth(),
+            contentPadding = PaddingValues(4.dp),
+            onClick = {
+                scrollbarSettings.value = LazyColumnScrollbarSettings()
+            }
+        ) {
+            Text("Default")
+        }
     }
 }
