@@ -25,7 +25,7 @@ import com.billythelittle.lazycolumnsexample.CustomListItem
 @ExperimentalFoundationApi
 @RequiresApi(Build.VERSION_CODES.N)
 @Composable
-fun ExampleDoubleHeaderList(data: List<CustomListItem>){
+fun ExampleDoubleHeaderList(data: List<CustomListItem>) {
     DoubleHeaderLazyColumn(data = data,
         modifier = Modifier.height(700.dp),
         headerContent = {
@@ -76,5 +76,6 @@ fun ExampleDoubleHeaderList(data: List<CustomListItem>){
                     }
                 }
             }
-        })
+        }
+    )
 }

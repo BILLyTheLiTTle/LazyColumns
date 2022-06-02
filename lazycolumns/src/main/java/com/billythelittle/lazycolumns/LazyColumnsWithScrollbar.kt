@@ -28,10 +28,35 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.consumeAllChanges
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
+data class LazyColumnScrollbarSettings(
+    var thumbColor: Color = Color.DarkGray,
+    var trailColor: Color = Color.Transparent,
+    var thumbWidth: ThumbWidth = ThumbWidth.MEDIUM,
+    var thumbHeight: ThumbHeight = ThumbHeight.MEDIUM,
+) {
+
+
+    enum class ThumbHeight(val value: Float) {
+        X_SMALL(6F),
+        SMALL(5F),
+        MEDIUM(4F),
+        LARGE(3F),
+        X_LARGE(2F),
+    }
+
+    enum class ThumbWidth(val value: Dp) {
+        X_SMALL(5.dp),
+        SMALL(10.dp),
+        MEDIUM(15.dp),
+        LARGE(25.dp),
+        X_LARGE(30.dp),
+    }
+}
 
 @ExperimentalAnimationApi
 @ExperimentalMaterialApi
@@ -49,6 +74,7 @@ fun <T> LazyColumnWithScrollbar(
 //                                if (!reverseLayout) Arrangement.Top else Arrangement.Bottom,
     horizontalAlignment: Alignment.Horizontal = Alignment.Start,
     flingBehavior: FlingBehavior = ScrollableDefaults.flingBehavior(),
+    settings: LazyColumnScrollbarSettings = LazyColumnScrollbarSettings(),
     content: LazyListScope.() -> Unit
 ) {
     val coroutineContext = rememberCoroutineScope()
@@ -104,13 +130,24 @@ fun <T> LazyColumnWithScrollbar(
                         if (state.layoutInfo.visibleItemsInfo.first().index == 0) {
                             offsetY.value = 0F
                         } else {
-                            offsetY.value = calculateScrollbarOffsetY(state, data.size, heightInPixels)
+                            offsetY.value = calculateScrollbarOffsetY(
+                                state,
+                                data.size,
+                                heightInPixels,
+                                settings.thumbHeight.value
+                            )
                         }
                     } else { // scroll to bottom end of list or reach the bottom end of the list
                         if (state.layoutInfo.visibleItemsInfo.last().index == data.lastIndex) {
-                            offsetY.value = heightInPixels.value - heightInPixels.value / 3F
+                            offsetY.value =
+                                heightInPixels.value - heightInPixels.value / settings.thumbHeight.value
                         } else {
-                            offsetY.value = calculateScrollbarOffsetY(state, data.size, heightInPixels)
+                            offsetY.value = calculateScrollbarOffsetY(
+                                state,
+                                data.size,
+                                heightInPixels,
+                                settings.thumbHeight.value
+                            )
                         }
                     }
 
@@ -137,10 +174,10 @@ fun <T> LazyColumnWithScrollbar(
                 modifier = Modifier.align(Alignment.CenterEnd)
             ) {
                 Canvas(modifier = Modifier
-                    .width(15.dp)
+                    .width(settings.thumbWidth.value)
                     .height(maxHeight)
                     .align(Alignment.CenterEnd)
-                    .background(Color.Transparent)
+                    .background(settings.trailColor)
                     .pointerInput(Unit) {
                         heightInPixels.value = maxHeight.toPx()
                         detectDragGestures { change, dragAmount ->
@@ -150,8 +187,9 @@ fun <T> LazyColumnWithScrollbar(
 
                             isUserScrollingLazyColumn.value = false
                             if (dragAmount.y > 0) { // drag slider down
-                                if (offsetY.value >= (maxHeight.toPx() - maxHeight.toPx() / 3F)) { // Bottom End
-                                    offsetY.value = maxHeight.toPx() - maxHeight.toPx() / 3F
+                                if (offsetY.value >= (maxHeight.toPx() - maxHeight.toPx() / settings.thumbHeight.value)) { // Bottom End
+                                    offsetY.value =
+                                        maxHeight.toPx() - maxHeight.toPx() / settings.thumbHeight.value
                                     coroutineContext.launch {
                                         state.scrollToItem(data.lastIndex)
                                     }
@@ -168,7 +206,8 @@ fun <T> LazyColumnWithScrollbar(
                                     offsetY.value = offsetY.value + dragAmount.y
                                 }
                             }
-                            val yMaxValue = maxHeight.toPx() - maxHeight.toPx() / 3F
+                            val yMaxValue =
+                                maxHeight.toPx() - maxHeight.toPx() / settings.thumbHeight.value
                             val yPercentage = (100 * offsetY.value) / yMaxValue
 
                             /* The items which could be rendered should not be taken under account
@@ -191,9 +230,9 @@ fun <T> LazyColumnWithScrollbar(
                     }
                 ) {
                     drawRoundRect(
-                        topLeft = Offset(0f, offsetY.value),
-                        color = Color.DarkGray,
-                        size = Size(size.width / 2F, maxHeight.toPx() / 3F),
+                        topLeft = Offset(size.width / 4F, offsetY.value),
+                        color = settings.thumbColor,
+                        size = Size(size.width / 2F, maxHeight.toPx() / settings.thumbHeight.value),
                         cornerRadius = CornerRadius(20F, 20F)
                     )
                 }
@@ -222,7 +261,8 @@ by the scrollbar.
 */
 private fun calculateScrollbarOffsetY(
     state: LazyListState, dataSize: Int,
-    height: MutableState<Float>
+    height: MutableState<Float>,
+    thumbHeight: Float
 ): Float {
     val renderedItemsNumberPerScroll =
         state.layoutInfo.visibleItemsInfo.size - 2
@@ -230,7 +270,7 @@ private fun calculateScrollbarOffsetY(
     val index = state.layoutInfo.visibleItemsInfo.first().index
     val indexPercentage = ((100 * index) / itemsToScroll)
 
-    val yMaxValue = height.value - height.value / 3F
+    val yMaxValue = height.value - height.value / thumbHeight
 
     return ((yMaxValue * indexPercentage) / 100)
 }
