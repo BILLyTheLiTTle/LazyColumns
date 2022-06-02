@@ -5,7 +5,6 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.*
 import androidx.compose.runtime.*
@@ -43,9 +42,7 @@ fun <T> IndexedLazyColumn(
     }
 
     Box(modifier = mainModifier, contentAlignment = settings.indicesPosition) {
-        Column() {
-            lazyColumnContent()
-        }
+        lazyColumnContent()
 
         LazyColumn(
             state = indexState,
@@ -107,11 +104,9 @@ fun <T> IndexedDataLazyColumn(
     }
 
     Box(modifier = mainModifier, contentAlignment = settings.indicesPosition) {
-        Column() {
-            LazyColumn(state = itemsState) {
-                itemsIndexed(data) { index, item ->
-                    mainItemContent(index)
-                }
+        LazyColumn(state = itemsState) {
+            itemsIndexed(data) { index, item ->
+                mainItemContent(index)
             }
         }
 
