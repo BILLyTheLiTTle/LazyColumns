@@ -16,7 +16,7 @@ fun getTheData(): List<CustomListItem> {
             "Shang-Chi and the Legend of the Ten Rings",
             "Shang-Chi, the master of unarmed weaponry-based Kung Fu, is forced to " +
                     "confront his past after being drawn into the Ten Rings organization.",
-            "https://threepixelslab.gr/wp-content/uploads/2021/04/Shang-Chi-and-the-Legend-of-the-Ten-Rings.jpg"),
+            "https://static.posters.cz/image/1300/%CE%91%CF%86%CE%AF%CF%83%CE%B5%CF%82/shang-chi-and-the-legend-of-the-ten-rings-flex-i114390.jpg"),
         CustomListItem("Movie", "Action",
             "The Matrix Resurrections",
             "The plot is currently unknown.",
