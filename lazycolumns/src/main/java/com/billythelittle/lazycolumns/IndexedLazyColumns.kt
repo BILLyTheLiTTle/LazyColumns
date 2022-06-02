@@ -6,7 +6,6 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.*
 import androidx.compose.runtime.*
@@ -17,6 +16,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 
+data class IndexedLazyColumnsSettings(
+    var indicesPosition: Alignment = Alignment.CenterEnd
+)
+
 @RequiresApi(Build.VERSION_CODES.N)
 @ExperimentalFoundationApi
 @Composable
@@ -26,6 +29,7 @@ fun <T> IndexedLazyColumn(
     mainModifier: Modifier = Modifier,
     indicesModifier: Modifier = Modifier,
     predicate: (T) -> Int,
+    settings: IndexedLazyColumnsSettings = IndexedLazyColumnsSettings(),
     lazyColumnContent: @Composable () -> Unit,
     indexedItemContent: @Composable (T, Boolean) -> Unit
 ) {
@@ -38,7 +42,7 @@ fun <T> IndexedLazyColumn(
         mutableStateOf(0)
     }
 
-    Box(modifier = mainModifier, contentAlignment = Alignment.CenterEnd) {
+    Box(modifier = mainModifier, contentAlignment = settings.indicesPosition) {
         Column() {
             lazyColumnContent()
         }
@@ -88,6 +92,7 @@ fun <T> IndexedDataLazyColumn(
     mainModifier: Modifier = Modifier,
     indicesModifier: Modifier = Modifier,
     predicate: (T) -> Int,
+    settings: IndexedLazyColumnsSettings = IndexedLazyColumnsSettings(),
     mainItemContent: @Composable LazyItemScope.(Int) -> Unit,
     indexedItemContent: @Composable (T, Boolean) -> Unit
 ) {
@@ -101,7 +106,7 @@ fun <T> IndexedDataLazyColumn(
         mutableStateOf(0)
     }
 
-    Box(modifier = mainModifier, contentAlignment = Alignment.CenterEnd) {
+    Box(modifier = mainModifier, contentAlignment = settings.indicesPosition) {
         Column() {
             LazyColumn(state = itemsState) {
                 itemsIndexed(data) { index, item ->

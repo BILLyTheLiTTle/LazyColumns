@@ -15,6 +15,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontStyle
@@ -23,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.billythelittle.lazycolumns.IndexedDataLazyColumn
 import com.billythelittle.lazycolumns.IndexedLazyColumn
+import com.billythelittle.lazycolumns.IndexedLazyColumnsSettings
 import com.billythelittle.lazycolumnsexample.CustomListItem2
 
 @ExperimentalFoundationApi
@@ -49,6 +51,8 @@ fun ExampleIndexedLazyColumn(data: List<CustomListItem2>,
                 item.surname.startsWith(it.toString(), true)
             }
         },
+        // The alignment settings for the indices list
+        settings = IndexedLazyColumnsSettings(Alignment.BottomEnd),
         // The list of the main data
         lazyColumnContent = {
             LazyColumn(state = lazyListState) {
