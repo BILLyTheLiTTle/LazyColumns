@@ -3,6 +3,12 @@
 # LazyColumns
 Here you will find variation of `LazyColumn`s for Jetpack Compose.
 
+## Compatibility
+| LazyColums  | Kotlin | Jetpack Compose  |
+| ------------- | ------------- | ------------- |
+| v0.2.5 and below  | 1.5.21  | 1.0.1  |
+| v0.2.6 and above  | 1.6.10  | 1.1.1  |
+
 ## Include Library
 To include the library in your project you should add it in your root build.gradle or in your settings.gradle the repository:
 ```kotlin
@@ -86,6 +92,9 @@ fun <T> IndexedDataLazyColumn(
     */
     predicate: (T) -> Int,
     
+    /* The alignment settings for the indices list */
+    settings: IndexedLazyColumnsSettings = IndexedLazyColumnsSettings(),
+    
     /* The Composable for the main items LazyColumn */
     mainItemContent: @Composable LazyItemScope.(Int) -> Unit,
     
@@ -113,6 +122,9 @@ fun <T> IndexedLazyColumn(
     add as parameter an item from indices list and return the index of an item from data.
     */
     predicate: (T) -> Int,
+    
+    /* The alignment settings for the indices list */
+    settings: IndexedLazyColumnsSettings = IndexedLazyColumnsSettings(),
     
     /* The Composable where you put your own LazyColumn implementation */
     lazyColumnContent: @Composable () -> Unit,
@@ -144,6 +156,10 @@ fun <T> LazyColumnWithScrollbar(
     contentPadding: PaddingValues = PaddingValues(0.dp),
     horizontalAlignment: Alignment.Horizontal = Alignment.Start,
     flingBehavior: FlingBehavior = ScrollableDefaults.flingBehavior(),
+    
+    /* The scrollbar rendering settings */
+    settings: LazyColumnScrollbarSettings = LazyColumnScrollbarSettings(),
+    
     content: LazyListScope.() -> Unit
 )
 ```
