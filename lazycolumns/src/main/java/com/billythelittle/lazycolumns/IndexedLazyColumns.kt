@@ -28,14 +28,21 @@ fun <T> IndexedLazyColumn(
     mainModifier: Modifier = Modifier,
     indicesModifier: Modifier = Modifier,
     predicate: (T) -> Int,
+    reversePredicate: (() -> Int)? = null,
     settings: IndexedLazyColumnsSettings = IndexedLazyColumnsSettings(),
     lazyColumnContent: @Composable () -> Unit,
     indexedItemContent: @Composable (T, Boolean) -> Unit
 ) {
     val coroutineContext = rememberCoroutineScope()
     val indexState = rememberLazyListState()
-    val shouldUpdateSelection = remember {
+    val shouldUpdateIndexedSelection = remember {
         mutableStateOf(false)
+    }
+    val isItemsListScrolledByUser = remember {
+        mutableStateOf(true)
+    }
+    val isIndicesListScrolledByUser = remember {
+        mutableStateOf(true)
     }
     val selectedIndex = remember {
         mutableStateOf(0)
@@ -43,30 +50,53 @@ fun <T> IndexedLazyColumn(
 
     Box(modifier = mainModifier, contentAlignment = settings.indicesPosition) {
         lazyColumnContent()
+        if (!itemsListState.isScrollInProgress) {
+            LaunchedEffect(isItemsListScrolledByUser.value) {
+                if (isItemsListScrolledByUser.value && reversePredicate != null) {
+                    // scrolling on indices is not by user (false)
+                    isIndicesListScrolledByUser.value = false
+
+                    val index = reversePredicate()
+                    indexState.scrollToItem(index)
+                    selectedIndex.value = index
+                }
+                // reset scrolling on items list to be by user (true)
+                isItemsListScrolledByUser.value = true
+            }
+        }
 
         LazyColumn(
             state = indexState,
             horizontalAlignment = Alignment.End,
             modifier = indicesModifier
         ) {
-            if (!indexState.isScrollInProgress && shouldUpdateSelection.value) {
-                val index = selectIndexItem(indexState)
+            if (!indexState.isScrollInProgress && shouldUpdateIndexedSelection.value) {
+                val index = indexState.layoutInfo.visibleItemsInfo.first().index
+                // scrolling on items list is not by user (false)
+                isItemsListScrolledByUser.value = false
 
-                scrollMainListBasedOnIndex(
-                    coroutineContext, predicate,
-                    indices, itemsListState,
-                    selectedIndex, index
-                )
+                if (isIndicesListScrolledByUser.value) {
+                    scrollMainListBasedOnIndex(
+                        coroutineContext, predicate,
+                        indices, itemsListState,
+                        selectedIndex, index
+                    )
+                }
 
-                shouldUpdateSelection.value = false
+                // scrolling on indices is by user (true)
+                isIndicesListScrolledByUser.value = true
+                shouldUpdateIndexedSelection.value = false
             } else if (indexState.isScrollInProgress) {
-                shouldUpdateSelection.value = true
+                shouldUpdateIndexedSelection.value = true
             }
 
             itemsIndexed(indices) { index, item ->
                 Box(modifier = Modifier
                     .padding(5.dp)
                     .clickable {
+                        // scrolling on items list is not by user (false)
+                        isItemsListScrolledByUser.value = false
+
                         scrollMainListBasedOnIndex(
                             coroutineContext, predicate,
                             indices, itemsListState,
@@ -89,15 +119,23 @@ fun <T> IndexedDataLazyColumn(
     mainModifier: Modifier = Modifier,
     indicesModifier: Modifier = Modifier,
     predicate: (T) -> Int,
+    reversePredicate: ((LazyListState) -> Int)? = null,
     settings: IndexedLazyColumnsSettings = IndexedLazyColumnsSettings(),
     mainItemContent: @Composable LazyItemScope.(Int) -> Unit,
     indexedItemContent: @Composable (T, Boolean) -> Unit
 ) {
     val coroutineContext = rememberCoroutineScope()
+    val indexScrollerCoroutineContext = rememberCoroutineScope()
     val indexState = rememberLazyListState()
     val itemsState = rememberLazyListState()
-    val shouldUpdateSelection = remember {
+    val shouldUpdateIndexedSelection = remember {
         mutableStateOf(false)
+    }
+    val isItemsListScrolledByUser = remember {
+        mutableStateOf(true)
+    }
+    val isIndicesListScrolledByUser = remember {
+        mutableStateOf(true)
     }
     val selectedIndex = remember {
         mutableStateOf(0)
@@ -105,6 +143,19 @@ fun <T> IndexedDataLazyColumn(
 
     Box(modifier = mainModifier, contentAlignment = settings.indicesPosition) {
         LazyColumn(state = itemsState) {
+            if (!itemsState.isScrollInProgress) {
+                if (isItemsListScrolledByUser.value && reversePredicate != null) {
+                    // scrolling on indices is not by user (false)
+                    isIndicesListScrolledByUser.value = false
+                    indexScrollerCoroutineContext.launch {
+                        val index = reversePredicate(itemsState)
+                        indexState.scrollToItem(index)
+                        selectedIndex.value = index
+                    }
+                }
+                // reset scrolling on items list to be by user (true)
+                isItemsListScrolledByUser.value = true
+            }
             itemsIndexed(data) { index, item ->
                 mainItemContent(index)
             }
@@ -115,24 +166,33 @@ fun <T> IndexedDataLazyColumn(
             horizontalAlignment = Alignment.End,
             modifier = indicesModifier
         ) {
-            if (!indexState.isScrollInProgress && shouldUpdateSelection.value) {
-                val index = selectIndexItem(indexState)
+            if (!indexState.isScrollInProgress && shouldUpdateIndexedSelection.value) {
+                val index = indexState.layoutInfo.visibleItemsInfo.first().index
+                // scrolling on items list is not by user (false)
+                isItemsListScrolledByUser.value = false
 
-                scrollMainListBasedOnIndex(
-                    coroutineContext, predicate,
-                    indices, itemsState,
-                    selectedIndex, index
-                )
+                if (isIndicesListScrolledByUser.value) {
+                    scrollMainListBasedOnIndex(
+                        coroutineContext, predicate,
+                        indices, itemsState,
+                        selectedIndex, index
+                    )
+                }
 
-                shouldUpdateSelection.value = false
+                // scrolling on indices is by user (true)
+                isIndicesListScrolledByUser.value = true
+                shouldUpdateIndexedSelection.value = false
             } else if (indexState.isScrollInProgress) {
-                shouldUpdateSelection.value = true
+                shouldUpdateIndexedSelection.value = true
             }
 
             itemsIndexed(indices) { index, item ->
                 Box(modifier = Modifier
                     .padding(5.dp)
                     .clickable {
+                        // scrolling on items list is not by user (false)
+                        isItemsListScrolledByUser.value = false
+
                         scrollMainListBasedOnIndex(
                             coroutineContext, predicate,
                             indices, itemsState,
@@ -161,11 +221,4 @@ private fun <T> scrollMainListBasedOnIndex(
         }
         selectedIndex.value = index
     }
-}
-
-private fun selectIndexItem(indexState: LazyListState): Int {
-    val list = indexState.layoutInfo.visibleItemsInfo
-    val startIndex = list.first().index
-    val lastIndex = list.last().index
-    return startIndex + ((lastIndex - startIndex) / 2)
 }
