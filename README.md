@@ -92,14 +92,23 @@ fun <T> IndexedDataLazyColumn(
     */
     predicate: (T) -> Int,
     
+    /* The way to connect the a data item with specific index 
+    (here the first letter of the surname matches the index item)
+    */
+    reversePredicate: ((LazyListState) -> Int)? = null,
+    
     /* The alignment settings for the indices list */
     settings: IndexedLazyColumnsSettings = IndexedLazyColumnsSettings(),
     
     /* The Composable for the main items LazyColumn */
     mainItemContent: @Composable LazyItemScope.(Int) -> Unit,
     
-    /* The Composable for the indices LazyColumn */
-    indexedItemContent: @Composable (T, Boolean) -> Unit
+    /* The Composable for the indices LazyColumn.
+    T: The index item to be rendered
+    Boolean: Whether or not the specific index item is selected by the user
+    Boolean: Whether or not the specific index item is selected by the user has a match on the data list
+    */
+    indexedItemContent: @Composable (T, Boolean, Boolean) -> Unit
 )
 ```
  - or this in case you want to create your own `LazyColumn` implementation for the main data
@@ -123,14 +132,23 @@ fun <T> IndexedLazyColumn(
     */
     predicate: (T) -> Int,
     
+    /* The way to connect the a data item with specific index 
+    (here the first letter of the surname matches the index item)
+    */
+    reversePredicate: ((LazyListState) -> Int)? = null,
+    
     /* The alignment settings for the indices list */
     settings: IndexedLazyColumnsSettings = IndexedLazyColumnsSettings(),
     
     /* The Composable where you put your own LazyColumn implementation */
     lazyColumnContent: @Composable () -> Unit,
     
-    /* The Composable for the indices LazyColumn */
-    indexedItemContent: @Composable (T, Boolean) -> Unit
+    /* The Composable for the indices LazyColumn.
+    T: The index item to be rendered
+    Boolean: Whether or not the specific index item is selected by the user
+    Boolean: Whether or not the specific index item is selected by the user has a match on the data list
+    */
+    indexedItemContent: @Composable (T, Boolean, Boolean) -> Unit
 )
 ```
 #### Examples
