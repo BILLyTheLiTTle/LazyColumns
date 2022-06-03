@@ -184,7 +184,7 @@ fun <T> LazyColumnWithScrollbar(
 )
 ```
 #### Examples
-You can find an example [here](https://github.com/BILLyTheLiTTle/LazyColumns/blob/main/app/src/main/java/com/billythelittle/lazycolumnsexample/scrollbar/ExampleLazyColumnsWithScrollbar.kt).
+You can find a code example [here](https://github.com/BILLyTheLiTTle/LazyColumns/blob/main/app/src/main/java/com/billythelittle/lazycolumnsexample/scrollbar/ExampleLazyColumnsWithScrollbar.kt).
 
 If you want to see how it looks like, check this [video](https://youtube.com/shorts/YQ6H26Sf6CM).
 
