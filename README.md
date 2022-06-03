@@ -93,7 +93,8 @@ fun <T> IndexedDataLazyColumn(
     predicate: (T) -> Int,
     
     /* The way to connect the a data item with specific index 
-    (here the first letter of the surname matches the index item)
+    (here the first letter of the surname matches the index item).
+    If this parameter is not provided (null) there is no connection from data list to the indices list.
     */
     reversePredicate: ((LazyListState) -> Int)? = null,
     
@@ -133,7 +134,8 @@ fun <T> IndexedLazyColumn(
     predicate: (T) -> Int,
     
     /* The way to connect the a data item with specific index 
-    (here the first letter of the surname matches the index item)
+    (here the first letter of the surname matches the index item).
+    If this parameter is not provided (null) there is no connection from data list to the indices list.
     */
     reversePredicate: ((LazyListState) -> Int)? = null,
     
