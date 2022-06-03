@@ -31,7 +31,7 @@ fun <T> IndexedLazyColumn(
     reversePredicate: (() -> Int)? = null,
     settings: IndexedLazyColumnsSettings = IndexedLazyColumnsSettings(),
     lazyColumnContent: @Composable () -> Unit,
-    indexedItemContent: @Composable (T, Boolean) -> Unit
+    indexedItemContent: @Composable (T, Boolean, Boolean) -> Unit
 ) {
     val coroutineContext = rememberCoroutineScope()
     val indexState = rememberLazyListState()
@@ -46,6 +46,9 @@ fun <T> IndexedLazyColumn(
     }
     val selectedIndex = remember {
         mutableStateOf(0)
+    }
+    val isSelectedItemExist = remember {
+        mutableStateOf(true)
     }
 
     Box(modifier = mainModifier, contentAlignment = settings.indicesPosition) {
@@ -76,7 +79,7 @@ fun <T> IndexedLazyColumn(
                 isItemsListScrolledByUser.value = false
 
                 if (isIndicesListScrolledByUser.value) {
-                    scrollMainListBasedOnIndex(
+                    isSelectedItemExist.value = scrollMainListBasedOnIndex(
                         coroutineContext, predicate,
                         indices, itemsListState,
                         selectedIndex, index
@@ -97,13 +100,13 @@ fun <T> IndexedLazyColumn(
                         // scrolling on items list is not by user (false)
                         isItemsListScrolledByUser.value = false
 
-                        scrollMainListBasedOnIndex(
+                        isSelectedItemExist.value = scrollMainListBasedOnIndex(
                             coroutineContext, predicate,
                             indices, itemsListState,
                             selectedIndex, index
                         )
                     }) {
-                    indexedItemContent(item, index == selectedIndex.value)
+                    indexedItemContent(item, index == selectedIndex.value, isSelectedItemExist.value)
                 }
             }
         }
@@ -122,7 +125,7 @@ fun <T> IndexedDataLazyColumn(
     reversePredicate: ((LazyListState) -> Int)? = null,
     settings: IndexedLazyColumnsSettings = IndexedLazyColumnsSettings(),
     mainItemContent: @Composable LazyItemScope.(Int) -> Unit,
-    indexedItemContent: @Composable (T, Boolean) -> Unit
+    indexedItemContent: @Composable (T, Boolean, Boolean) -> Unit
 ) {
     val coroutineContext = rememberCoroutineScope()
     val indexScrollerCoroutineContext = rememberCoroutineScope()
@@ -139,6 +142,9 @@ fun <T> IndexedDataLazyColumn(
     }
     val selectedIndex = remember {
         mutableStateOf(0)
+    }
+    val isSelectedItemExist = remember {
+        mutableStateOf(true)
     }
 
     Box(modifier = mainModifier, contentAlignment = settings.indicesPosition) {
@@ -172,7 +178,7 @@ fun <T> IndexedDataLazyColumn(
                 isItemsListScrolledByUser.value = false
 
                 if (isIndicesListScrolledByUser.value) {
-                    scrollMainListBasedOnIndex(
+                    isSelectedItemExist.value = scrollMainListBasedOnIndex(
                         coroutineContext, predicate,
                         indices, itemsState,
                         selectedIndex, index
@@ -193,13 +199,13 @@ fun <T> IndexedDataLazyColumn(
                         // scrolling on items list is not by user (false)
                         isItemsListScrolledByUser.value = false
 
-                        scrollMainListBasedOnIndex(
+                        isSelectedItemExist.value = scrollMainListBasedOnIndex(
                             coroutineContext, predicate,
                             indices, itemsState,
                             selectedIndex, index
                         )
                     }) {
-                    indexedItemContent(item, index == selectedIndex.value)
+                    indexedItemContent(item, index == selectedIndex.value, isSelectedItemExist.value)
                 }
             }
         }
@@ -212,13 +218,14 @@ private fun <T> scrollMainListBasedOnIndex(
     indices: List<T>,
     itemsListState: LazyListState,
     selectedIndex: MutableState<Int>,
-    index: Int
-) {
+    index: Int,
+): Boolean {
+    val itemIndex = predicate(indices[index])
     coroutineContext.launch {
-        val itemIndex = predicate(indices[index])
         if (itemIndex >= 0) {
             itemsListState.scrollToItem(itemIndex)
         }
         selectedIndex.value = index
     }
+    return itemIndex >= 0
 }
