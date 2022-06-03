@@ -5,10 +5,7 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -16,6 +13,7 @@ import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontStyle
@@ -51,6 +49,11 @@ fun ExampleIndexedLazyColumn(data: List<CustomListItem2>,
                 item.surname.startsWith(it.toString(), true)
             }
         },
+        // The way to connect the a data item with specific index (here the first letter of the surname matches the index item)
+        reversePredicate = {
+            val firstChar = data[lazyListState.layoutInfo.visibleItemsInfo.first().index].surname[0]
+            indices.indexOf(firstChar)
+        },
         // The alignment settings for the indices list
         settings = IndexedLazyColumnsSettings(Alignment.BottomEnd),
         // The list of the main data
@@ -76,18 +79,33 @@ fun ExampleIndexedLazyColumn(data: List<CustomListItem2>,
                 }
             }
         },
-        // The item content for the indices list
-        indexedItemContent = { item, isSelected ->
+        /* The item content for the indices list
+        item: The index item to be rendered
+        isSelected: Whether or not the specific index item is selected by the user
+        isSelectedItemExist: Whether or not the specific index item is selected by the user has
+        a match on the data list
+         */
+        indexedItemContent = { item, isSelected, isSelectedItemExist ->
             Text(
                 modifier = Modifier
                     .background(color = Color.Transparent),
-                color = if (isSelected) Color.Blue else Color.Black,
+                color = if (isSelected) {
+                    if (isSelectedItemExist) {
+                        Color.Green
+                    } else {
+                        Color.Red
+                    }
+                } else {
+                    Color.Black
+                },
                 text = item.toString(),
-                fontSize = 20.sp)
+                fontSize = 20.sp
+            )
         }
     )
 }
 
+@ExperimentalComposeUiApi
 @ExperimentalFoundationApi
 @RequiresApi(Build.VERSION_CODES.N)
 @Composable
@@ -110,6 +128,11 @@ fun ExampleIndexedDataLazyColumn(data: List<CustomListItem2>,
             data.indexOfFirst { item ->
                 item.surname.startsWith(it.toString(), true) }
         },
+        // The way to connect the a data item with specific index (here the first letter of the surname matches the index item)
+        reversePredicate = {
+            val firstChar = data[it.layoutInfo.visibleItemsInfo.first().index].surname[0]
+            indices.indexOf(firstChar)
+        },
         // The list of the main data
         mainItemContent = {
             Card(
@@ -129,14 +152,28 @@ fun ExampleIndexedDataLazyColumn(data: List<CustomListItem2>,
                 }
             }
         },
-        // The item content for the indices list
-        indexedItemContent = { item, isSelected ->
+        /* The item content for the indices list
+        item: The index item to be rendered
+        isSelected: Whether or not the specific index item is selected by the user
+        isSelectedItemExist: Whether or not the specific index item is selected by the user has
+        a match on the data list
+         */
+        indexedItemContent = { item, isSelected, isSelectedItemExist ->
             Text(
                 modifier = Modifier
                     .background(color = Color.Transparent),
-                color = if (isSelected) Color.Blue else Color.Black,
+                color = if (isSelected) {
+                    if (isSelectedItemExist) {
+                        Color.Green
+                    } else {
+                        Color.Red
+                    }
+                } else {
+                    Color.Black
+                },
                 text = item.toString(),
-                fontSize = 20.sp)
+                fontSize = 20.sp
+            )
         }
     )
 }
