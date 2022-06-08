@@ -1,6 +1,8 @@
 [![](https://jitpack.io/v/BILLyTheLiTTle/LazyColumns.svg)](https://jitpack.io/#BILLyTheLiTTle/LazyColumns)
 
 # LazyColumns
+
+## Description
 Here you will find variation of `LazyColumn`s for Jetpack Compose. You can have the List UI you have used to, in a **Jetpack Compose** way eliminating the need of `AndroidView` Composable.
 
 ## Compatibility
