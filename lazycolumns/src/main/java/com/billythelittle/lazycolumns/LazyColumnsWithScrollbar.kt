@@ -46,14 +46,15 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
+@Immutable
 data class LazyColumnScrollbarSettings(
-    var thumbColor: Color = Color.DarkGray,
-    var trailColor: Color = Color.Transparent,
-    var thumbWidth: ThumbWidth = ThumbWidth.MEDIUM,
-    var thumbHeight: ThumbHeight = ThumbHeight.MEDIUM,
+    val thumbColor: Color = Color.DarkGray,
+    val trailColor: Color = Color.Transparent,
+    val thumbWidth: ThumbWidth = ThumbWidth.MEDIUM,
+    val thumbHeight: ThumbHeight = ThumbHeight.MEDIUM,
 ) {
 
-
+    @Immutable
     enum class ThumbHeight(val value: Float) {
         X_SMALL(6F),
         SMALL(5F),
@@ -62,6 +63,7 @@ data class LazyColumnScrollbarSettings(
         X_LARGE(2F),
     }
 
+    @Immutable
     enum class ThumbWidth(val value: Dp) {
         X_SMALL(5.dp),
         SMALL(10.dp),

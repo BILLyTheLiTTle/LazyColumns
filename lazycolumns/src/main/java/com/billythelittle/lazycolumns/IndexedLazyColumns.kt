@@ -32,9 +32,9 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-
+@Stable
 data class IndexedLazyColumnsSettings(
-    var indicesPosition: Alignment = Alignment.CenterEnd
+    val indicesPosition: Alignment = Alignment.CenterEnd
 )
 
 @RequiresApi(Build.VERSION_CODES.N)
