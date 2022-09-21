@@ -94,6 +94,7 @@ fun <T> IndexedLazyColumn(
                 val index = indexState.layoutInfo.visibleItemsInfo.first().index
                 // scrolling on items list is not by user (false)
                 isItemsListScrolledByUser.value = false
+                isSelectedItemExist.value = true
 
                 if (isIndicesListScrolledByUser.value) {
                     isSelectedItemExist.value = scrollMainListBasedOnIndex(
@@ -193,6 +194,7 @@ fun <T> IndexedDataLazyColumn(
                 val index = indexState.layoutInfo.visibleItemsInfo.first().index
                 // scrolling on items list is not by user (false)
                 isItemsListScrolledByUser.value = false
+                isSelectedItemExist.value = true
 
                 if (isIndicesListScrolledByUser.value) {
                     isSelectedItemExist.value = scrollMainListBasedOnIndex(
