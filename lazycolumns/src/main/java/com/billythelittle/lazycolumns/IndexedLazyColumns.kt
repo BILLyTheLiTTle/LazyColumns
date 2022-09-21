@@ -38,7 +38,6 @@ data class IndexedLazyColumnsSettings(
 )
 
 @RequiresApi(Build.VERSION_CODES.N)
-@ExperimentalFoundationApi
 @Composable
 fun <T> IndexedLazyColumn(
     indices: List<T>,

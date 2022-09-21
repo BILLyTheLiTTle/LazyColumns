@@ -21,13 +21,11 @@ package com.billythelittle.lazycolumns
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.FlingBehavior
 import androidx.compose.foundation.gestures.ScrollableDefaults
@@ -35,16 +33,13 @@ import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.pointer.consumeAllChanges
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -76,10 +71,6 @@ data class LazyColumnScrollbarSettings(
     }
 }
 
-@ExperimentalAnimationApi
-@ExperimentalMaterialApi
-@ExperimentalComposeUiApi
-@ExperimentalFoundationApi
 @RequiresApi(Build.VERSION_CODES.N)
 @Composable
 fun <T> LazyColumnWithScrollbar(
@@ -199,7 +190,7 @@ fun <T> LazyColumnWithScrollbar(
                     .pointerInput(Unit) {
                         heightInPixels.value = maxHeight.toPx()
                         detectDragGestures { change, dragAmount ->
-                            change.consumeAllChanges()
+                            change.consume()
 
                             showScrollbar(animationCoroutineContext, isScrollbarVisible)
 

@@ -21,7 +21,6 @@ package com.billythelittle.lazycolumns
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
@@ -44,7 +43,6 @@ open class Item(
     open val subType: String
 )
 
-@ExperimentalAnimationApi
 @RequiresApi(Build.VERSION_CODES.N)
 @ExperimentalFoundationApi
 @Composable
