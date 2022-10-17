@@ -42,12 +42,14 @@ import com.billythelittle.lazycolumns.IndexedDataLazyColumn
 import com.billythelittle.lazycolumns.IndexedLazyColumn
 import com.billythelittle.lazycolumns.IndexedLazyColumnsSettings
 import com.billythelittle.lazycolumnsexample.CustomListItem2
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toPersistentList
 
 @ExperimentalFoundationApi
 @RequiresApi(Build.VERSION_CODES.N)
 @Composable
-fun ExampleIndexedLazyColumn(data: List<CustomListItem2>,
-                             indices: List<Char> = ('A'..'Z').toList()) {
+fun ExampleIndexedLazyColumn(data: ImmutableList<CustomListItem2>,
+                             indices: ImmutableList<Char> = ('A'..'Z').toPersistentList()) {
     val lazyListState = rememberLazyListState()
 
     IndexedLazyColumn(
@@ -127,8 +129,8 @@ fun ExampleIndexedLazyColumn(data: List<CustomListItem2>,
 @ExperimentalFoundationApi
 @RequiresApi(Build.VERSION_CODES.N)
 @Composable
-fun ExampleIndexedDataLazyColumn(data: List<CustomListItem2>,
-                                 indices: List<Char> = ('A'..'Z').toList()) {
+fun ExampleIndexedDataLazyColumn(data: ImmutableList<CustomListItem2>,
+                                 indices: ImmutableList<Char> = ('A'..'Z').toPersistentList()) {
 
     IndexedDataLazyColumn(
         // The list of the indices

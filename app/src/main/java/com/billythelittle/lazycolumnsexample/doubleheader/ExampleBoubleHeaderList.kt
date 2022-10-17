@@ -37,13 +37,14 @@ import coil.compose.rememberImagePainter
 import coil.transform.CircleCropTransformation
 import com.billythelittle.lazycolumns.DoubleHeaderLazyColumn
 import com.billythelittle.lazycolumnsexample.CustomListItem
+import kotlinx.collections.immutable.ImmutableList
 
 @ExperimentalCoilApi
 @ExperimentalAnimationApi
 @ExperimentalFoundationApi
 @RequiresApi(Build.VERSION_CODES.N)
 @Composable
-fun ExampleDoubleHeaderList(data: List<CustomListItem>) {
+fun ExampleDoubleHeaderList(data: ImmutableList<CustomListItem>) {
     DoubleHeaderLazyColumn(data = data,
         modifier = Modifier.height(700.dp),
         headerContent = {

@@ -41,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.billythelittle.lazycolumns.LazyColumnScrollbarSettings
 import com.billythelittle.lazycolumns.LazyColumnWithScrollbar
+import kotlinx.collections.immutable.ImmutableList
 
 @ExperimentalAnimationApi
 @ExperimentalMaterialApi
@@ -48,7 +49,7 @@ import com.billythelittle.lazycolumns.LazyColumnWithScrollbar
 @ExperimentalFoundationApi
 @RequiresApi(Build.VERSION_CODES.N)
 @Composable
-fun ExampleLazyColumnWithScrollbar(data: List<Int>) {
+fun ExampleLazyColumnWithScrollbar(data: ImmutableList<Int>) {
     val scrollbarSettings = remember {
         mutableStateOf(LazyColumnScrollbarSettings())
     }

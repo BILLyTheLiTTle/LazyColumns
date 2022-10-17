@@ -29,6 +29,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -40,7 +41,7 @@ data class IndexedLazyColumnsSettings(
 @RequiresApi(Build.VERSION_CODES.N)
 @Composable
 fun <T> IndexedLazyColumn(
-    indices: List<T>,
+    indices: ImmutableList<T>,
     itemsListState: LazyListState,
     mainModifier: Modifier = Modifier,
     indicesModifier: Modifier = Modifier,
@@ -135,8 +136,8 @@ fun <T> IndexedLazyColumn(
 @ExperimentalFoundationApi
 @Composable
 fun <T> IndexedDataLazyColumn(
-    indices: List<T>,
-    data: List<T>,
+    indices: ImmutableList<T>,
+    data: ImmutableList<T>,
     mainModifier: Modifier = Modifier,
     indicesModifier: Modifier = Modifier,
     predicate: (T) -> Int,

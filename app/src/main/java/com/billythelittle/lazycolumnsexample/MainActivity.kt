@@ -46,6 +46,7 @@ import com.billythelittle.lazycolumnsexample.indexed.ExampleIndexedDataLazyColum
 import com.billythelittle.lazycolumnsexample.indexed.ExampleIndexedLazyColumn
 import com.billythelittle.lazycolumnsexample.scrollbar.ExampleLazyColumnWithScrollbar
 import com.billythelittle.lazycolumnsexample.ui.theme.LazyColumnsTheme
+import kotlinx.collections.immutable.toPersistentList
 
 @ExperimentalAnimationApi
 @ExperimentalComposeUiApi
@@ -67,7 +68,7 @@ class MainActivity : ComponentActivity() {
                         composable("Example DoubleHeaderLazyColumn") { ExampleDoubleHeaderList(getTheData()) }
                         composable("Example IndexedLazyColumn") { ExampleIndexedLazyColumn(getTheIndexedData()) }
                         composable("Example IndexedDataLazyColumn") { ExampleIndexedDataLazyColumn(getTheIndexedData()) }
-                        composable("Example LazyColumnWithScrollbar") { ExampleLazyColumnWithScrollbar((1..120).toList()) }
+                        composable("Example LazyColumnWithScrollbar") { ExampleLazyColumnWithScrollbar((1..120).toPersistentList()) }
                     }
                 }
             }

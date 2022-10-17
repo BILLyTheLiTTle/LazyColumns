@@ -34,6 +34,7 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import kotlinx.collections.immutable.ImmutableList
 
 /*
  * The data used in the list should override this class.
@@ -48,7 +49,7 @@ open class Item(
 @RequiresApi(Build.VERSION_CODES.N)
 @ExperimentalFoundationApi
 @Composable
-fun DoubleHeaderLazyColumn(data: List<Item>,
+fun DoubleHeaderLazyColumn(data: ImmutableList<Item>,
                      modifier: Modifier = Modifier,
                      headerContent: @Composable (String) -> Unit,
                      subHeaderContent: @Composable (String) -> Unit,

@@ -19,6 +19,8 @@
 package com.billythelittle.lazycolumnsexample
 
 import com.billythelittle.lazycolumns.Item
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 class CustomListItem(
     override val type: String = "",
@@ -28,8 +30,8 @@ class CustomListItem(
     val imageUrl: String = ""
 ): Item(type, subType)
 
-fun getTheData(): List<CustomListItem> {
-    return listOf(
+fun getTheData(): ImmutableList<CustomListItem> {
+    return persistentListOf(
         CustomListItem("Movie", "Action",
             "Shang-Chi and the Legend of the Ten Rings",
             "Shang-Chi, the master of unarmed weaponry-based Kung Fu, is forced to " +
@@ -148,8 +150,8 @@ class CustomListItem2(
     val name: String = "",
 )
 
-fun getTheIndexedData(): List<CustomListItem2> {
-    return listOf(
+fun getTheIndexedData(): ImmutableList<CustomListItem2> {
+    return persistentListOf(
         CustomListItem2("A_Surname", "Name"),
         CustomListItem2("A_Surname", "Name"),
         CustomListItem2("B_Surname", "Name"),
