@@ -91,7 +91,12 @@ fun <T> LazyColumnWithScrollbar(
     val coroutineContext = rememberCoroutineScope()
     val animationCoroutineContext = rememberCoroutineScope()
 
-    val offsetY = remember { mutableStateOf(0f) }
+    var remOffsetY by remember {
+        mutableStateOf(0f)
+    }
+    val offsetY = //remember {
+        mutableStateOf(remOffsetY)
+    //}
     val isUserScrollingLazyColumn = remember {
         mutableStateOf(true)
     }
@@ -125,13 +130,13 @@ fun <T> LazyColumnWithScrollbar(
         ) {
             if (!state.isScrollInProgress) {
                 isUserScrollingLazyColumn.value = true
-                hideScrollbar(animationCoroutineContext, isScrollbarVisible)
+//                hideScrollbar(animationCoroutineContext, isScrollbarVisible)
 
                 if (state.layoutInfo.visibleItemsInfo.isNotEmpty()) {
                     firstVisibleItem.value = state.layoutInfo.visibleItemsInfo.first().index
                 }
             } else if (state.isScrollInProgress && isUserScrollingLazyColumn.value) {
-                showScrollbar(animationCoroutineContext, isScrollbarVisible)
+//                showScrollbar(animationCoroutineContext, isScrollbarVisible)
 
                 if (heightInPixels.value != 0F) {
 
@@ -161,29 +166,30 @@ fun <T> LazyColumnWithScrollbar(
                             )
                         }
                     }
+                    remOffsetY = offsetY.value
 
                 }
             }
             content()
         }
         if (state.layoutInfo.visibleItemsInfo.size < data.size) {
-            AnimatedVisibility(
-                visible = isScrollbarVisible.value,
-                enter = fadeIn(
-                    animationSpec = tween(
-                        durationMillis = 200,
-                        easing = LinearEasing
-                    )
-                ),
-                exit = fadeOut(
-                    animationSpec = tween(
-                        delayMillis = 1000,
-                        durationMillis = 1000,
-                        easing = LinearEasing
-                    )
-                ),
-                modifier = Modifier.align(Alignment.CenterEnd)
-            ) {
+//            AnimatedVisibility(
+//                visible = isScrollbarVisible.value,
+//                enter = fadeIn(
+//                    animationSpec = tween(
+//                        durationMillis = 200,
+//                        easing = LinearEasing
+//                    )
+//                ),
+//                exit = fadeOut(
+//                    animationSpec = tween(
+//                        delayMillis = 1000,
+//                        durationMillis = 1000,
+//                        easing = LinearEasing
+//                    )
+//                ),
+//                modifier = Modifier.align(Alignment.CenterEnd)
+//            ) {
                 Canvas(modifier = Modifier
                     .width(settings.thumbWidth.value)
                     .height(maxHeight)
@@ -194,7 +200,7 @@ fun <T> LazyColumnWithScrollbar(
                         detectDragGestures { change, dragAmount ->
                             change.consume()
 
-                            showScrollbar(animationCoroutineContext, isScrollbarVisible)
+//                            showScrollbar(animationCoroutineContext, isScrollbarVisible)
 
                             isUserScrollingLazyColumn.value = false
                             if (dragAmount.y > 0) { // drag slider down
@@ -249,7 +255,7 @@ fun <T> LazyColumnWithScrollbar(
                 }
             }
         }
-    }
+//    }
 }
 
 private fun hideScrollbar(coroutineScope: CoroutineScope, state: MutableState<Boolean>) {
