@@ -44,9 +44,15 @@ import androidx.navigation.compose.rememberNavController
 import com.billythelittle.lazycolumnsexample.doubleheader.ExampleDoubleHeaderList
 import com.billythelittle.lazycolumnsexample.indexed.ExampleIndexedDataLazyColumn
 import com.billythelittle.lazycolumnsexample.indexed.ExampleIndexedLazyColumn
+import com.billythelittle.lazycolumnsexample.netflixscreen.ExampleNetflixLazyScreen
 import com.billythelittle.lazycolumnsexample.scrollbar.ExampleLazyColumnWithScrollbar
 import com.billythelittle.lazycolumnsexample.ui.theme.LazyColumnsTheme
 import kotlinx.collections.immutable.toPersistentList
+
+
+
+val features = listOf("Example DoubleHeaderLazyColumn", "Example IndexedLazyColumn",
+    "Example IndexedDataLazyColumn", "Example LazyColumnWithScrollbar", "Example NetflixLazyScreen")
 
 @ExperimentalAnimationApi
 @ExperimentalComposeUiApi
@@ -55,7 +61,6 @@ import kotlinx.collections.immutable.toPersistentList
 @ExperimentalFoundationApi
 @RequiresApi(Build.VERSION_CODES.N)
 class MainActivity : ComponentActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -65,10 +70,11 @@ class MainActivity : ComponentActivity() {
                 Surface(color = MaterialTheme.colors.background) {
                     NavHost(navController = navController, startDestination = "Greeting") {
                         composable("Greeting") { Greeting(navController) }
-                        composable("Example DoubleHeaderLazyColumn") { ExampleDoubleHeaderList(getTheData()) }
-                        composable("Example IndexedLazyColumn") { ExampleIndexedLazyColumn(getTheIndexedData()) }
-                        composable("Example IndexedDataLazyColumn") { ExampleIndexedDataLazyColumn(getTheIndexedData()) }
-                        composable("Example LazyColumnWithScrollbar") { ExampleLazyColumnWithScrollbar((1..120).toPersistentList()) }
+                        composable(features[0]) { ExampleDoubleHeaderList(getTheData()) }
+                        composable(features[1]) { ExampleIndexedLazyColumn(getTheIndexedData()) }
+                        composable(features[2]) { ExampleIndexedDataLazyColumn(getTheIndexedData()) }
+                        composable(features[3]) { ExampleLazyColumnWithScrollbar((1..120).toPersistentList()) }
+                        composable(features[4]) { ExampleNetflixLazyScreen() }
                     }
                 }
             }
@@ -83,8 +89,6 @@ class MainActivity : ComponentActivity() {
 @ExperimentalFoundationApi
 @Composable
 fun Greeting(navController: NavController) {
-    val features = listOf("Example DoubleHeaderLazyColumn", "Example IndexedLazyColumn",
-    "Example IndexedDataLazyColumn", "Example LazyColumnWithScrollbar")
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
