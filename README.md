@@ -28,12 +28,12 @@ dependencies {
 
 ## What is implemented
 
-### DoubleHeaderLazyColumn
+[Double Header LazyColumn](/Guidelines/Double_Header_LazyColumn.md)
 
 
-### IndexedLazyColumns
+[Indexed LazyColumns](/Guidelines/Indexed_LazyColumn.md)
 
 
-### LazyColumnWithScrollbar
+[LazyColumn With Scrollbar](/Guidelines/LazyColum_with_scrollbar.md)
 
-### Netflix Lazy Screen
+[Netflix Lazy Screen](/Guidelines/Netflix_Lazy_Screen.md)
