@@ -18,6 +18,7 @@
  */
 package com.billythelittle.lazycolumns
 
+import android.annotation.SuppressLint
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedVisibility
@@ -73,6 +74,7 @@ data class LazyColumnScrollbarSettings(
     }
 }
 
+@SuppressLint("UnrememberedMutableState")
 @RequiresApi(Build.VERSION_CODES.N)
 @Composable
 fun <T> LazyColumnWithScrollbar(
