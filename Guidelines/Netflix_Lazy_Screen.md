@@ -1,6 +1,8 @@
 [![](https://jitpack.io/v/BILLyTheLiTTle/LazyColumns.svg)](https://jitpack.io/#BILLyTheLiTTle/LazyColumns)
 
 ### NetflixLazyScreen
+<img src="./assets/netflix_clone_compose.gif" width="250"/>
+
 #### How to use
 You have to implement the whole screen instead of `LazyColumn`:
 - The `PrimaryAppBar` has the same parameters as the `TopAppBar` from Jetpack Compose.
@@ -19,11 +21,3 @@ fun NetflixLazyScreen(
 ```
 #### Examples
 You can find a code example [here](https://github.com/BILLyTheLiTTle/LazyColumns/blob/2a4ea83c4b281175ed281807490bf94dc09b85c6/app/src/main/java/com/billythelittle/lazycolumnsexample/netflixscreen/ExampleNetflixLazyScreen.kt).
-
-If you want to see how it looks like, check this [video](https://youtube.com/shorts/YQ6H26Sf6CM).
-
-<p align="center">
-	<a href="https://www.youtube.com/watch?v=YQ6H26Sf6CM" target="_blank">
-		<img src="https://img.youtube.com/vi/YQ6H26Sf6CM/0.jpg">
-	</a>
-</p>
