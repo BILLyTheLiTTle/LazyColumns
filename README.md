@@ -23,7 +23,7 @@ repositories {
 Next add the dependency in your module:
 ```kotlin
 dependencies {
-	 implementation 'com.github.BILLyTheLiTTle:LazyColumns:0.3.0'
+	 implementation 'com.github.BILLyTheLiTTle:LazyColumns:0.3.2'
 }
 ```
 
